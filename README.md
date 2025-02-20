@@ -79,6 +79,11 @@ http://localhost:8000/evaluation
   }
 }
 ```
+## Example Image
+
+![Evaluation Page](app/static/evaluation_page.png)
+
+
 
 ## Project Structure
 
