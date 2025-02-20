@@ -1,9 +1,10 @@
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #3498db;
-    --background-color: #f5f6fa;
-    --text-color: #2c3e50;
-    --border-color: #dcdde1;
+    --primary-color: rgb(45, 62, 80);    /* 네이비 컬러 */
+    --secondary-color: #ffffff;           /* 화이트 */
+    --background-color: #f8f9fa;         /* 연한 회색 배경 */
+    --text-color: #333333;               /* 텍스트 컬러 */
+    --border-color: #e9ecef;             /* 경계선 컬러 */
+    --hover-color: rgb(55, 72, 90);      /* 호버 시 네이비 컬러 */
 }
 
 * {
@@ -19,52 +20,74 @@ body {
     background-color: var(--background-color);
 }
 
-nav {
+/* 네비게이션 바 스타일 */
+.navbar {
+    background-color: var(--primary-color) !important;
+    padding: 0.5rem; /* 기존 1rem → 0.5rem으로 줄이기 */
+    height: 50px; /* 원하는 높이로 설정 */
+}
+
+.navbar-brand, 
+.nav-link {
+    color: var(--secondary-color) !important;
+    margin-right: 2rem;  /* 네비게이션 아이템 간격 조정 */
+}
+
+.navbar-brand:hover, 
+.nav-link:hover {
+    color: var(--border-color) !important;
+}
+
+.form-select {
     background-color: var(--primary-color);
-    padding: 1rem;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-main {
+/* 메인 컨텐츠 영역 */
+.container {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
 }
 
-/* 드래그 앤 드롭 영역 스타일 */
-.upload-section {
-    margin: 2rem 0;
+/* 카드 스타일 */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
 }
 
-#drop-zone {
+.card-header {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: 8px 8px 0 0 !important;
+    padding: 1rem;
+}
+
+.card-body {
+    background-color: var(--secondary-color);
+    border-radius: 0 0 8px 8px;
+}
+
+/* 업로드 영역 스타일 */
+.upload-area {
     border: 2px dashed var(--border-color);
     border-radius: 8px;
     padding: 2rem;
     text-align: center;
-    background-color: white;
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
 }
 
-#drop-zone.dragover {
-    border-color: var(--secondary-color);
-    background-color: rgba(52, 152, 219, 0.1);
+.upload-area:hover,
+.upload-area.dragover {
+    border-color: var(--primary-color);
+    background-color: var(--background-color);
 }
 
-/* 데이터셋 카드 스타일 */
+/* 데이터셋 그리드 스타일 */
 .dataset-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -73,55 +96,152 @@ main {
 }
 
 .dataset-card {
-    background-color: white;
+    background-color: var(--secondary-color);
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.dataset-card h3 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.dataset-info {
-    margin-bottom: 1rem;
-}
-
 .view-details-btn {
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.view-details-btn:hover {
+    background-color: var(--hover-color);
+}
+
+/* 테이블 스타일 */
+.table {
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    min-width: 100%;
+    table-layout: fixed;
+}
+
+.table thead th {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-bottom: none;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: var(--background-color);
 }
 
 /* 모달 스타일 */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
+.modal-content {
+    background-color: var(--secondary-color);
+    border-radius: 8px;
 }
 
-.modal-content {
-    background-color: white;
-    margin: 10% auto;
-    padding: 2rem;
-    width: 80%;
-    max-width: 800px;
+.modal-header {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: 8px 8px 0 0;
+}
+
+/* 페이지네이션 스타일 추가 */
+.pagination-controls {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-controls button {
+    background-color: var(--primary-color);
+    border: none;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+.pagination-controls button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.pagination-controls button:not(:disabled):hover {
+    background-color: var(--hover-color);
+}
+
+.entries-info {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+#pageInfo {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* 테이블 반응형 스타일 개선 */
+.table-responsive {
+    margin-bottom: 1rem;
     border-radius: 8px;
+    overflow-x: auto;
+}
+
+.table {
+    min-width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+/* Audio File 칼럼 스타일 */
+.table th.audio-file-column,
+.table td.audio-file-column {
+    width: 200px;
+    min-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     position: relative;
 }
 
-.close {
+/* 전사 결과 칼럼 스타일 */
+.table th.transcript-column,
+.table td.transcript-column {
+    width: 300px;
+    min-width: 300px;
+    white-space: pre-wrap;  /* 줄바꿈 허용 */
+    word-break: break-word;
+    height: auto;
+}
+
+/* 모델 결과(CER) 칼럼 스타일 */
+.table th.model-column,
+.table td.model-column {
+    width: 120px;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* 테이블 셀 공통 스타일 */
+.table th, 
+.table td {
+    padding: 1rem;
+    vertical-align: top;
+    border: 1px solid var(--border-color);
+}
+
+/* 호버 시 툴팁 스타일 */
+.tooltip-text {
+    display: none;
     position: absolute;
-    right: 1rem;
-    top: 1rem;
-    font-size: 1.5rem;
-    cursor: pointer;
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    z-index: 1000;
+    max-width: 400px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+td:hover .tooltip-text {
+    display: block;
 } 
