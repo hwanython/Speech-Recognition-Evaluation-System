@@ -12,7 +12,7 @@ async def home(request: Request, lang: str = "en"):
     """Render the main page with markdown content"""
     # Read and convert markdown content
     markdown_path = Path("project.md")
-    with open(markdown_path) as f:
+    with open(markdown_path, "r", encoding="utf-8") as f:
         content = f.read()
         
     html_content = markdown2.markdown(content)

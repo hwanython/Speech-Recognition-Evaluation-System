@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="dataset-grid">
                         {% for dataset in raw_datasets %}
-                        <div class="dataset-card" data-type="raw" data-name="{{ dataset.name }}">
+                        <div class="dataset-card">
                             <h3>{{ dataset.name }}</h3>
                             <div class="dataset-info">
                                 <p>{{ translations.total_files }}: {{ dataset.file_count }}</p>
@@ -25,7 +25,7 @@
                                 <p>{{ translations.script_files }}: {{ dataset.script_count }}</p>
                                 {% endif %}
                             </div>
-                            <button class="view-details-btn">{{ translations.view_details }}</button>
+                            <a href="/dataset/raw/{{ dataset.name }}" class="btn btn-primary">{{ translations.view_details }}</a>
                         </div>
                         {% endfor %}
                     </div>
@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <div class="dataset-grid">
                         {% for dataset in processed_datasets %}
-                        <div class="dataset-card" data-type="processed" data-name="{{ dataset.name }}">
+                        <div class="dataset-card">
                             <h3>{{ dataset.name }}</h3>
                             <div class="dataset-info">
                                 <p>{{ translations.total_files }}: {{ dataset.file_count }}</p>
@@ -56,7 +56,7 @@
                                 <p class="has-json">{{ translations.includes_dataset_json }}</p>
                                 {% endif %}
                             </div>
-                            <button class="view-details-btn">{{ translations.view_details }}</button>
+                            <a href="/dataset/processed/{{ dataset.name }}" class="btn btn-primary">{{ translations.view_details }}</a>
                         </div>
                         {% endfor %}
                     </div>
