@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="language-selector mb-3">
+        <select id="langSelect" onchange="changeLang(this.value)">
+            <option value="en" {% if lang == "en" %}selected{% endif %}>English</option>
+            <option value="ko" {% if lang == "ko" %}selected{% endif %}>한국어</option>
+        </select>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>{{ translations.upload_title }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="upload-area" id="dropZone">
+                <p>{{ translations.upload_description }}</p>
+                <input type="file" id="fileInput" style="display: none;" accept=".json">
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>{{ translations.metrics_title }}</h3>
+        </div>
+        <div class="card-body">
+            <canvas id="metricsChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>{{ translations.results_title }}</h3>
+        </div>
+        <div class="card-body">
+            <div id="resultsTable"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let metricsChart = null;
+
+// 드래그 앤 드롭 영역 설정
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+});
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    if (files.length) handleFile(files[0]);
+});
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length) handleFile(e.target.files[0]);
+});
+
+async function handleFile(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        // Upload file
+        const uploadResponse = await fetch('/evaluation/upload', {
+            method: 'POST',
+            body: formData
+        });
+        const uploadData = await uploadResponse.json();
+
+        if (uploadData.status === 'success') {
+            // Update metrics chart
+            updateMetricsChart(uploadData.metrics);
+            
+            // Fetch and display results
+            const resultsResponse = await fetch('/evaluation/results');
+            const resultsData = await resultsResponse.json();
+            updateResultsTable(resultsData);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('파일 처리 중 오류가 발생했습니다.');
+    }
+}
+
+function updateMetricsChart(data) {
+    const ctx = document.getElementById('metricsChart').getContext('2d');
+    
+    if (metricsChart) {
+        metricsChart.destroy();
+    }
+
+    metricsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'CER',
+                data: data.values,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Character Error Rate (CER)'
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: '모델별 CER 비교'
+                }
+            }
+        }
+    });
+}
+
+function updateResultsTable(data) {
+    const tableDiv = document.getElementById('resultsTable');
+    const audioFiles = Object.keys(data.results);
+    
+    let tableHTML = `
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Audio File</th>
+                    ${data.models.map(model => `<th>${model}</th>`).join('')}
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    audioFiles.forEach(audioFile => {
+        tableHTML += `
+            <tr>
+                <td>${audioFile.split('/').pop()}</td>
+                ${data.models.map(model => `
+                    <td>${data.results[audioFile][model] || ''}</td>
+                `).join('')}
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    tableDiv.innerHTML = tableHTML;
+}
+
+function changeLang(lang) {
+    window.location.href = `?lang=${lang}`;
+}
+</script>
+
+<style>
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.upload-area.dragover {
+    border-color: #000;
+    background-color: #f8f9fa;
+}
+</style>
+{% endblock %} 
