@@ -19,6 +19,10 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.cursorrules
+dataset.json
+evaluation.json
+eval_resutls.json
 
 # Virtual Environment
 venv/

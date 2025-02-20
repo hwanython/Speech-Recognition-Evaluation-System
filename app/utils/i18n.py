@@ -20,10 +20,14 @@ TRANSLATIONS = {
         "no_data": "데이터가 없습니다.",
         
         # 데이터셋 페이지
-        "dataset_title": "데이터셋 관리",
-        "dataset_upload": "데이터셋 업로드",
-        "dataset_list": "데이터셋 목록",
-        "dataset_stats": "데이터셋 통계",
+        "dataset_title": "데이터셋 확인",
+        "raw_data": "Raw 데이터",
+        "processed_data": "Processed 데이터",
+        "total_files": "총 파일 수",
+        "audio_files": "오디오 파일 수",
+        "script_files": "스크립트 파일 수",
+        "view_details": "상세 보기",
+        "includes_dataset_json": "dataset.json 포함",
         "no_datasets": "사용 가능한 데이터셋이 없습니다."
     },
     "en": {
@@ -47,9 +51,13 @@ TRANSLATIONS = {
         
         # Dataset page
         "dataset_title": "Dataset Management",
-        "dataset_upload": "Upload Dataset",
-        "dataset_list": "Dataset List",
-        "dataset_stats": "Dataset Statistics",
+        "raw_data": "Raw Data",
+        "processed_data": "Processed Data",
+        "total_files": "Total Files",
+        "audio_files": "Audio Files",
+        "script_files": "Script Files",
+        "view_details": "View Details",
+        "includes_dataset_json": "Includes dataset.json",
         "no_datasets": "No datasets available."
     }
 }

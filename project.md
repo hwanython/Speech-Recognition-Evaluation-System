@@ -1,4 +1,4 @@
-# 프로젝트 요구 정의서
+# Speech Recognition Evaluation and Dataset Management System 프로젝트 요구 정의서
 
 ## 1. 개요
 
