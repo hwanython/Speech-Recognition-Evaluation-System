@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Create New Dataset</h2>
+    <form method="post" action="/datasets/create">
+        <div class="mb-3">
+            <label for="name" class="form-label">Dataset Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="collection" class="form-label">Collection</label>
+            <select class="form-select" id="collection" name="collection" required>
+                <option value="">Select Collection</option>
+                <option value="internal">Internal</option>
+                <option value="youtube">YouTube</option>
+                <!-- 필요한 collection 옵션 추가 -->
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Dataset</button>
+        <a href="/datasets" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %} 
